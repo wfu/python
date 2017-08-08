@@ -1,13 +1,27 @@
 # -*- coding: utf-8 -*- 
 #cherrypick
 
-# File: readline-example-1.py
-#import sqlite3
+'''
+cn fuweilin
+h hash
+cd datime
+s msg
+'''
 
 
-sqlfile = open('keyword.sql','w')
 
-kfile = open("keyword.txt")
+path = '/var/www/';
+afterDate = '2017-1-1';
+authors = ['fuweilin','fuweilin2']
+
+
+cmd = 'git log --pretty=format:%H  %cd %s';
+for author in authors:
+    cmd += '--author=' + author;
+
+
+
+lfile = open("git.log")
 templateName=''
 while 1:
     line = kfile.readline()
