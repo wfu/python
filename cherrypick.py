@@ -1,43 +1,35 @@
 # -*- coding: utf-8 -*- 
 #cherrypick
 
-'''
-cn fuweilin
-h hash
-cd datime
-s msg
-'''
+import os
+
+path = 'c:/work/rc/Coding';
+gitlog = 'c:/git.log';
+gitscript = 'c:/git.txt';
+afterDate = '2017-8-1';
+authors = ['author1','author2']
 
 
-
-path = '/var/www/';
-afterDate = '2017-1-1';
-authors = ['fuweilin','fuweilin2']
-
-
-cmd = 'git log --pretty=format:%H  %cd %s';
+cmd = 'git log --pretty=format:"%H %s" '
 for author in authors:
-    cmd += '--author=' + author;
+    cmd += '--author=' + author +' '
+cmd += '--after='+afterDate + ' > ' + gitlog
+print cmd;
+os.chdir(path)
+os.system(cmd)
 
-
-
-lfile = open("git.log")
-templateName=''
+logfile = open(gitlog)
+gitfile = open(gitscript, 'w')
 while 1:
-    line = kfile.readline()
+    line = logfile.readline()
     if not line:
         break
-    if (templateName == ''):
-        templateName = line.strip('\n')
-        continue
-    else:
-        if line != '\n':
-            sql = "insert or ignore into tb_keyword (templateName,keyword) values('" + templateName.strip('\n') + "','" + line.strip('\n') + "');"
-            print sql
-            print >> sqlfile, sql
-#            cx.execute(sql)
-        else:
-            templateName=''
-print >> sqlfile, '\n\n\n'
-kfile.close()
-sqlfile.close()
+    hash = line.split(' ')[0]
+    if hash.strip():
+        str = 'git cherry-pick ' + hash
+        print >> gitfile, str
+
+logfile.close()
+gitfile.close()
+      
+    
